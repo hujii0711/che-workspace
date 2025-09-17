@@ -74,7 +74,7 @@ commands:
       commandLine: 'npm install --location=global https://hujii0711.github.io/che-workspace/websquare-web-extension-1.0.0.vsix'
       workingDir: ${PROJECT_SOURCE}
       group:
-        skind: build
+        kind: build
 events:
   postStart:
     - install-vsix
