@@ -68,3 +68,15 @@ commands:
       group:
         kind: test
         isDefault: true
+  - id: install-vsix
+    exec:
+      component: runtime
+      commandLine: >
+        curl -o /tmp/websquare-web-extension.vsix https://hujii0711.github.io/che-workspace/websquare-web-extension-1.0.0.vsix &&
+        code --install-extension /tmp/websquare-web-extension.vsix
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        kind: build
+events:
+  postStart:
+    - install-vsix
