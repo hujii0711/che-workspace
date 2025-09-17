@@ -35,20 +35,7 @@ components:
         - exposure: none
           name: debug
           targetPort: 5858
-  # VS Code 확장팩을 위한 볼륨
-  - name: vscode-extensions
-    volume:
-      size: 1Gi
 commands:
-  # 확장팩 설치 명령어
-  - id: install-extensions
-    exec:
-      component: runtime
-      commandLine: |
-        curl -L -o /tmp/websquare-web-extension.vsix https://hujii0711.github.io/che-workspace/websquare-web-extension-1.0.0.vsix
-        code --install-extension /tmp/websquare-web-extension.vsix
-      group:
-        kind: build
   - id: install
     exec:
       component: runtime
