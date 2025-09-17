@@ -35,6 +35,11 @@ components:
         - exposure: none
           name: debug
           targetPort: 5858
+  # 여기 추가
+  - name: web-extension
+    vscode:
+      extensions:
+        - https://hujii0711.github.io/che-workspace/websquare-web-extension-1.0.0.vsix
 commands:
   - id: install
     exec:
