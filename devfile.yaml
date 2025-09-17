@@ -69,12 +69,12 @@ commands:
         kind: test
         isDefault: true
   - id: install-vsix
-    exec:
-      component: runtime
-      commandLine: 'npm install --location=global https://hujii0711.github.io/che-workspace/websquare-web-extension-1.0.0.vsix'
-      workingDir: ${PROJECT_SOURCE}
-      group:
-        kind: build  
+    exec:
+      component: runtime
+      commandLine: 'npm install --location=global https://hujii0711.github.io/che-workspace/websquare-web-extension-1.0.0.vsix'
+      workingDir: ${PROJECT_SOURCE}
+      group:
+        skind: build
 events:
   postStart:
     - install-vsix
