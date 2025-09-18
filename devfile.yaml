@@ -64,10 +64,3 @@ commands:
       group:
         kind: test
         isDefault: true
-starterProjects:
-  - name: nodejs-starter
-    git:
-      checkoutFrom:
-        revision: main
-      remotes:
-        origin: https://github.com/nodeshift-starters/devfile-sample.git
