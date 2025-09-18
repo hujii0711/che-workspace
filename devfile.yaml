@@ -11,18 +11,14 @@ metadata:
   projectType: Node.js
   language: JavaScript
   version: 2.2.1
-starterProjects:
-  - name: nodejs-starter
-    git:
-      checkoutFrom:
-        revision: main
-      remotes:
-        origin: 'https://github.com/nodeshift-starters/devfile-sample.git'
 components:
   - name: runtime
     container:
       image: registry.access.redhat.com/ubi8/nodejs-18:1-32
-      args: ['tail', '-f', '/dev/null']
+      args:
+        - tail
+        - '-f'
+        - /dev/null
       memoryLimit: 1024Mi
       mountSources: true
       env:
@@ -68,3 +64,10 @@ commands:
       group:
         kind: test
         isDefault: true
+starterProjects:
+  - name: nodejs-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/nodeshift-starters/devfile-sample.git
