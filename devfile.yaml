@@ -1,4 +1,4 @@
-schemaVersion: 2.2.3
+schemaVersion: 2.2.2
 metadata:
   name: nodejs
   displayName: Node.js Runtime
@@ -10,7 +10,7 @@ metadata:
     - ubi8
   projectType: Node.js
   language: JavaScript
-  version: 2.2.1
+  version: 2.2.2
 components:
   - name: runtime
     container:
