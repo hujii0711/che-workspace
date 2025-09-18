@@ -1,45 +1,41 @@
 schemaVersion: 2.2.0
 metadata:
-name: nodejs-20-workspace
-displayName: Node.js 20 Runtime
-description: Node.js 20 기반의 개발 환경
-tags:
-  - Node.js
-  - JavaScript
-  - Express
+  name: nodejs-20-workspace
+  version: 1.0.0
+
 components:
-- name: nodejs
-  container:
-    image: node:20
-    memoryLimit: 1Gi
-    mountSources: true
-    command: ['tail']
-    args: ['-f', '/dev/null']
-    env:
-      - name: NODE_ENV
-        value: development
-    endpoints:
-      - name: nodejs-app
-        targetPort: 3000
-        exposure: public
-        protocol: http
-- name: vscode-editor
-  container:
-    image: quay.io/eclipse/che-code:latest
-    memoryLimit: 2Gi
-    endpoints:
-      - name: code
-        exposure: public
-        protocol: http
-        targetPort: 3100
+  - name: nodejs
+    container:
+      image: node:20
+      memoryLimit: 1Gi
+      mountSources: true
+      command: ['tail']
+      args: ['-f', '/dev/null']
+      env:
+        - name: NODE_ENV
+          value: development
+      endpoints:
+        - name: nodejs-app
+          targetPort: 3000
+          exposure: public
+          protocol: http
+  - name: vscode-editor
+    container:
+      image: quay.io/eclipse/che-code:latest
+      memoryLimit: 2Gi
+      endpoints:
+        - name: code
+          exposure: public
+          protocol: http
+          targetPort: 3100
 commands:
-- id: install-deps
-  exec:
-    component: nodejs
-    commandLine: "npm install"
-    workingDir: /projects
-- id: run-app
-  exec:
-    component: nodejs
-    commandLine: "npm start"
-    workingDir: /projects
+  - id: install-deps
+    exec:
+      component: nodejs
+      commandLine: "npm install"
+      workingDir: /projects
+  - id: run-app
+    exec:
+      component: nodejs
+      commandLine: "npm start"
+      workingDir: /projects
