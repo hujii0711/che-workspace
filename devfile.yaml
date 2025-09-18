@@ -1,4 +1,4 @@
-schemaVersion: 2.2.2
+schemaVersion: 2.2.3
 metadata:
   name: nodejs
   displayName: Node.js Runtime
