@@ -20,13 +20,6 @@ components:
           exposure: public
           protocol: http
 
-  - name: vscode-editor
-    container:
-      image: quay.io/eclipse/che-code:latest
-      memoryLimit: 2Gi
-      # endpoint 제거
-      # Che 자체에서 IDE 포트 관리
-
 commands:
   - id: install-deps
     exec:
