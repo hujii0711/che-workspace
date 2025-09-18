@@ -1,33 +1,51 @@
-schemaVersion: 2.2.0
+schemaVersion: 2.2.2
 metadata:
-  name: nodejs-20-workspace
-  version: 1.0.0
-
+  name: nodejs-nextjs
+  displayName: Next.js
+  description: 'Next.js gives you the best developer experience with all the features you need for production: hybrid static & server rendering, TypeScript support, smart bundling, route pre-fetching, and more. No config needed.'
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/next-js.svg
+  tags:
+    - Node.js
+    - Next.js
+  projectType: Next.js
+  language: TypeScript
+  provider: Red Hat
+  version: 1.2.1
 components:
-  - name: nodejs
-    container:
-      image: node:20
-      memoryLimit: 1Gi
-      mountSources: true
-      command: ['tail']
-      args: ['-f', '/dev/null']
-      env:
-        - name: NODE_ENV
-          value: development
+  - container:
       endpoints:
-        - name: nodejs-app
+        - name: https-nextjs
+          protocol: https
           targetPort: 3000
-          exposure: public
-          protocol: http
-
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-137.1742991061
+      command:
+        - tail
+        - '-f'
+        - /dev/null
+      memoryLimit: 1024Mi
+    name: runtime
 commands:
-  - id: install-deps
-    exec:
-      component: nodejs
-      commandLine: "npm install"
-      workingDir: /projects
-  - id: run-app
-    exec:
-      component: nodejs
-      commandLine: "npm start"
-      workingDir: /projects
+  - exec:
+      commandLine: npm install
+      component: runtime
+      group:
+        isDefault: true
+        kind: build
+      workingDir: ${PROJECT_SOURCE}
+    id: install
+  - exec:
+      commandLine: npm run dev
+      component: runtime
+      group:
+        isDefault: true
+        kind: run
+      hotReloadCapable: true
+      workingDir: ${PROJECT_SOURCE}
+    id: run
+starterProjects:
+  - name: nodejs-nextjs-starter
+    git:
+      checkoutFrom:
+        revision: main
+      remotes:
+        origin: https://github.com/devfile-samples/devfile-stack-nodejs-nextjs.git
