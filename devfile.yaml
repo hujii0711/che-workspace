@@ -1,8 +1,8 @@
-schemaVersion: 2.2.0
+schemaVersion: 2.2.2
 metadata:
   name: nodejs
   displayName: Node.js Runtime
-  description: Node.js 20 application
+  description: Node.js 18 application
   icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/node-js.svg
   tags:
     - Node.js
@@ -14,7 +14,7 @@ metadata:
 components:
   - name: runtime
     container:
-      image: registry.access.redhat.com/ubi8/nodejs-20:latest
+      image: registry.access.redhat.com/ubi8/nodejs-18:1-32
       args:
         - tail
         - '-f'
