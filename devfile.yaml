@@ -1,73 +1,69 @@
 schemaVersion: 2.2.2
 metadata:
-  name: nodejs
-  displayName: Node.js Runtime
-  description: Node.js 18 application
-  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/node-js.svg
+  name: java-springboot
+  displayName: Spring Boot®
+  description: Java application using Spring Boot® and OpenJDK 17
+  icon: https://raw.githubusercontent.com/devfile-samples/devfile-stack-icons/main/spring.svg
   tags:
-    - Node.js
-    - Express
-    - ubi8
-  projectType: Node.js
-  language: JavaScript
-  version: 2.2.1
+    - Java
+    - Spring
+  projectType: springboot
+  language: Java
+  version: 1.4.0
+  globalMemoryLimit: 2674Mi
 components:
-  - name: runtime
+  - name: tools
     container:
-      image: registry.access.redhat.com/ubi8/nodejs-18:1-32
-      args:
+      image: registry.access.redhat.com/ubi9/openjdk-17:1.20-2.1721752931
+      command:
         - tail
         - '-f'
         - /dev/null
-      memoryLimit: 1024Mi
+      memoryLimit: 768Mi
       mountSources: true
-      env:
-        - name: DEBUG_PORT
-          value: '5858'
       endpoints:
-        - name: https-node
-          targetPort: 3000
+        - name: https-springbt
+          targetPort: 8080
           protocol: https
         - exposure: none
           name: debug
           targetPort: 5858
+      volumeMounts:
+        - name: m2
+          path: /home/user/.m2
+      env:
+        - name: DEBUG_PORT
+          value: '5858'
+  - name: m2
+    volume:
+      size: 3Gi
 commands:
-  - id: install
+  - id: build
     exec:
-      component: runtime
-      commandLine: npm install
+      component: tools
       workingDir: ${PROJECT_SOURCE}
+      commandLine: mvn clean -Dmaven.repo.local=/home/user/.m2/repository package -Dmaven.test.skip=true
       group:
         kind: build
         isDefault: true
   - id: run
     exec:
-      component: runtime
-      commandLine: npm start
+      component: tools
       workingDir: ${PROJECT_SOURCE}
+      commandLine: mvn -Dmaven.repo.local=/home/user/.m2/repository spring-boot:run
       group:
         kind: run
         isDefault: true
   - id: debug
     exec:
-      component: runtime
-      commandLine: npm run debug
+      component: tools
       workingDir: ${PROJECT_SOURCE}
+      commandLine: java -Xdebug -Xrunjdwp:server=y,transport=dt_socket,address=${DEBUG_PORT},suspend=n -jar target/*.jar
       group:
         kind: debug
         isDefault: true
-  - id: test
-    exec:
-      component: runtime
-      commandLine: npm test
-      workingDir: ${PROJECT_SOURCE}
-      group:
-        kind: test
-        isDefault: true
 starterProjects:
-  - name: nodejs-starter
+  - name: springbootproject
     git:
-      checkoutFrom:
-        revision: main
       remotes:
-        origin: https://github.com/nodeshift-starters/devfile-sample.git
+        origin: https://github.com/devfile-samples/springboot-ex.git
