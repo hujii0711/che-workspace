@@ -7,4 +7,4 @@ components:
       image: quay.io/devfile/universal-developer-image:latest
     attributes:
       che-code.eclipse.org/vscode-extensions:
-        - https://hujii0711.github.io/savezone/websquare-web-extension.visx
+        - https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
