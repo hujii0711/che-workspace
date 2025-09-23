@@ -4,7 +4,7 @@ metadata:
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:ubi8-latest
+      image: quay.io/devfile/universal-developer-image:latest
     attributes:
       che-code.eclipse.org/vscode-extensions:
         - https://hujii0711.github.io/che-workspace/websquare-web-extension.visx
