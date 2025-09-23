@@ -1,14 +1,24 @@
-schemaVersion: 2.2.0
+schemaVersion: 2.3.0
 metadata:
-  name: my-dev-env
-  generateName: abc
+  name: my-workspace
+  generateName: my-workspace-
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:latest
+      image: quay.io/devfile/universal-developer-image:latest # 기본 개발자 이미지 (curl 포함)
       memoryLimit: 2Gi
       mountSources: true
-  - name: custom-extension
-    extensions:
-      - name: my-custom-extension
-        uri: "https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix"
+      env:
+        - name: DEFAULT_EXTENSIONS
+          value: "/tmp/websquare-web-extension-1.0.0.vsix" # 다운로드된 VSIX 경로
+commands:
+  - id: install-vsix
+    exec:
+      component: tools
+      commandLine: |
+        curl -L -o /tmp/websquare-web-extension-1.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
+      group:
+        kind: run
+events:
+  postStart:
+    - install-vsix
