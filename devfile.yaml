@@ -6,10 +6,13 @@ components:
     container:
       image: quay.io/devfile/universal-developer-image:latest
       mountSources: true
-    attributes:
-      editor:
-        extensions:
-          - uri: "https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix"
-          - uri: "https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix"
-          - uri: "https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix"
-          - uri: "https://hujii0711.github.io/savezone/vscjava.vscode-java-pack-0.29.2.vsix"
+  - name: extensions
+    extensions:
+      - name: websquare-web-extension
+        uri: "https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix"
+      - name: korean-language-pack
+        uri: "https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix"
+      - name: spring-boot-dev-pack
+        uri: "https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix"
+      - name: java-pack
+        uri: "https://hujii0711.github.io/savezone/vscjava.vscode-java-pack-0.29.2.vsix"
