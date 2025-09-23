@@ -1,23 +1,37 @@
 schemaVersion: 2.2.0
 metadata:
-  name: my-workspace124444
+  name: my-workspace1
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:latest # 기본 개발자 이미지 (curl 포함)
+      image: quay.io/devfile/universal-developer-image:latest
       memoryLimit: 2Gi
       mountSources: true
       env:
         - name: DEFAULT_EXTENSIONS
-          value: "/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix" # 다운로드된 VSIX 경로 (여러 개: '/tmp/ext1.vsix;/tmp/ext2.vsix')
+          value: "/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix"
+      volumeMounts:
+        - name: tmp
+          path: /tmp
+  - name: tmp
+    volume:
+      size: 1Gi
 commands:
-  - id: install-vsix
+  - id: install-springboot-vsix
     exec:
       component: tools
       commandLine: |
-        curl -L -o /tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix
+        curl -L --fail --silent --show-error -o /tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix || { echo "Failed to download vmware.vscode-boot-dev-pack-0.2.2.vsix"; exit 1; }
+      group:
+        kind: run
+  - id: install-ko-langpack-vsix
+    exec:
+      component: tools
+      commandLine: |
+        curl -L --fail --silent --show-error -o /tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix || { echo "Failed to download vscode-language-pack-ko-1.105.2025091709.vsix"; exit 1; }
       group:
         kind: run
 events:
   postStart:
-    - install-vsix
+    -install-springboot-vsix
+    - install-ko-langpack-vsix
