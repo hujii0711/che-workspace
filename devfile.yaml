@@ -2,21 +2,14 @@ schemaVersion: 2.2.0
 metadata:
   name: my-workspace
 components:
-  - name: editor
+  - name: tools
     container:
-      image: quay.io/eclipse/che-code:latest
+      image: quay.io/devfile/universal-developer-image:latest
       memoryLimit: 2Gi
       mountSources: true
-commands:
-  - id: install-extension
-    exec:
-      component: editor
-      commandLine: >
-        code --install-extension https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
-      workingDir: /projects
-      group:
-        kind: build
-        isDefault: true
+    vscode:
+      extensions:
+        - https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
 events:
   postStart:
     - install-extension
