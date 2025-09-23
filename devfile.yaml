@@ -2,17 +2,16 @@ schemaVersion: 2.2.0
 metadata:
   name: my-workspace1111
 components:
+  - name: editor
+    editor:
+      id: eclipse/che-code/latest
+      vscode:
+        extensions:
+          - https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
+          - https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+          - https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix
+          - https://hujii0711.github.io/savezone/vscjava.vscode-java-pack-0.29.2.vsix
   - name: tools
     container:
       image: quay.io/devfile/universal-developer-image:latest
       mountSources: true
-  - name: extensions
-    extensions:
-      - name: websquare-web-extension
-        uri: "https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix"
-      - name: korean-language-pack
-        uri: "https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix"
-      - name: spring-boot-dev-pack
-        uri: "https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix"
-      - name: java-pack
-        uri: "https://hujii0711.github.io/savezone/vscjava.vscode-java-pack-0.29.2.vsix"
