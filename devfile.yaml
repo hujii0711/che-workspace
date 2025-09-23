@@ -1,10 +1,10 @@
-schemaVersion: 2.3.0
+schemaVersion: 2.2.0
 metadata:
   name: my-workspace124444
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:ubi8-latest # 기본 개발자 이미지 (curl 포함)
+      image: quay.io/devfile/universal-developer-image:latest # 기본 개발자 이미지 (curl 포함)
       memoryLimit: 2Gi
       mountSources: true
       env:
