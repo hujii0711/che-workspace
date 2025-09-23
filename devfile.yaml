@@ -1,13 +1,7 @@
 schemaVersion: 2.2.0
 metadata:
-  name: my-workspace
-components:
-  - name: tools
-    container:
-      image: quay.io/devfile/universal-developer-image:latest
-      memoryLimit: 2Gi
-      mountSources: true
-
+  name: my-workspace1111
+  
 commands:
   - id: install-extension
     exec:
