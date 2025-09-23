@@ -33,5 +33,5 @@ commands:
         kind: run
 events:
   postStart:
-    -install-springboot-vsix
+    - install-springboot-vsix
     - install-ko-langpack-vsix
