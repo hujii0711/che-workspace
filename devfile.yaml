@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: my-dev-env1234
+  name: my-dev-env12341231253234
 components:
   - name: tools
     container:
