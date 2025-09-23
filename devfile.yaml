@@ -1,17 +1,10 @@
 schemaVersion: 2.2.0
 metadata:
   name: my-workspace1233
-  
 components:
   - name: tools
     container:
-      image: quay.io/devfile/universal-developer-image:latest
-      memoryLimit: 2Gi
-      mountSources: true
-  - name: custom-extension
-    plugin:
-      uri: https://hujii0711.github.io/che-workspace/websquare-web-extension.visx
-
-events:
-  postStart:
-    - install-extension
+      image: quay.io/devfile/universal-developer-image:ubi8-latest
+    attributes:
+      che-code.eclipse.org/vscode-extensions:
+        - https://hujii0711.github.io/che-workspace/websquare-web-extension.visx
