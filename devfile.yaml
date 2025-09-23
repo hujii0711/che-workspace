@@ -1,17 +1,8 @@
 schemaVersion: 2.2.0
 metadata:
-  name: my-workspace333
+  name: my-workspace5555
 components:
-  - name: universal-image
+  - name: che-code
     container:
-      image: quay.io/devfile/universal-developer-image:latest
+      image: quay.io/eclipse/che-code:latest
       mountSources: true
-    attributes:
-      che-theia.eclipse.org/vscode-extensions:
-        - redhat.java
-        - vscjava.vscode-java-debug
-        - vscjava.vscode-java-test
-        - vscjava.vscode-maven
-        - pivotal.vscode-spring-boot
-        - vmware.vscode-spring-boot-dashboard
-        - vscjava.vscode-spring-initializr
