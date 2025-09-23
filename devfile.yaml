@@ -2,11 +2,12 @@ schemaVersion: 2.2.0
 metadata:
   name: my-workspace1111
 components:
-  - name: editor
-    editor:
-      id: eclipse/che-code/latest
-      vscode:
-        extensions:
+  - name: che-code
+    container:
+      image: quay.io/devspaces/che-code:insiders
+      memoryLimit: 2Gi
+      attributes:
+        che-code.eclipse.org/vscode-extensions:
           - https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
           - https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
           - https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix
