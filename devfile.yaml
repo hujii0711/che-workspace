@@ -1,7 +1,6 @@
 schemaVersion: 2.3.0
 metadata:
-  name: my-workspace
-  generateName: my-workspace-
+  name: my-workspace1234678
 components:
   - name: tools
     container:
