@@ -1,23 +1,45 @@
 schemaVersion: 2.3.0
 metadata:
-  name: my-workspace1234678
+  name: che-workspace-with-custom-vsix
+
+# 권장: che-code 에디터 명시
+editor:
+  id: che-incubator/che-code/insiders/latest
+
 components:
-  - name: tools
+  # (중요) che-code 컨테이너에 DEFAULT_EXTENSIONS 주입
+  - name: che-code
     container:
-      image: quay.io/devfile/universal-developer-image:latest # 기본 개발자 이미지 (curl 포함)
-      memoryLimit: 2Gi
+      # mountSources는 에디터 쪽에도 켜두는 게 안전합니다(공유 볼륨 /projects).
       mountSources: true
       env:
         - name: DEFAULT_EXTENSIONS
-          value: "/tmp/websquare-web-extension-1.0.0.vsix" # 다운로드된 VSIX 경로
+          value: "/projects/custom-extensions/websquare-web-extension-1.0.0.vsix"
+
+  # VSIX 내려받는 도우미 컨테이너
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:latest
+      mountSources: true
+      command: ["/bin/sh"]
+      args:
+        - "-c"
+        - |
+          # postStart에서 curl을 돌릴 거라 여기선 대기
+          sleep infinity
+
 commands:
-  - id: install-vsix
+  - id: fetch-vsix
     exec:
       component: tools
+      label: "Fetch VSIX"
+      workingDir: /projects
       commandLine: |
-        curl -L -o /tmp/websquare-web-extension-1.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
-      group:
-        kind: run
+        mkdir -p /projects/custom-extensions
+        curl --location --fail \
+          "https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix" \
+          -o /projects/custom-extensions/websquare-web-extension-1.0.0.vsix
+
 events:
   postStart:
-    - install-vsix
+    - fetch-vsix
