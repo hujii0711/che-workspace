@@ -8,14 +8,10 @@ components:
       image: quay.io/devfile/universal-developer-image:latest
       memoryLimit: 2Gi
       mountSources: true
-      
-commands:
-  - id: install-extension
-    exec:
-      component: tools
-      commandLine: >
-        curl -L -o /tmp/websquare-web-extension.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
-      workingDir: /projects
+  - name: aaa-extension # 확장 프로그램 컴포넌트 이름
+    extensions:
+      - name: custom-extension-aaa
+        uri: "https://hujii0711.github.io/che-workspace/websquare-web-extension.visx"
 
 events:
   postStart:
