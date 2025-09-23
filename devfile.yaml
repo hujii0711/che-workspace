@@ -1,8 +1,14 @@
-schemaVersion: 2.2.0
+schemaVersion: 2.1.0
 metadata:
   name: my-workspace5555
 components:
-  - name: che-code
+  - name: tools
     container:
-      image: quay.io/eclipse/che-code:latest
-      mountSources: true
+      image: quay.io/devfile/universal-developer-image:latest
+    attributes:
+    editor:
+      extensions:
+        - https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
+        - https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+        - https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix
+        - https://hujii0711.github.io/savezone/vscjava.vscode-java-pack-0.29.2.vsix
