@@ -8,9 +8,15 @@ components:
       memoryLimit: 2Gi
       mountSources: true
 
-  - name: che-code
-    editor:
-      id: eclipse/che-code/latest
-      vscode:
-        extensions:
-          - https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
+commands:
+  - id: install-extension
+    exec:
+      component: tools
+      commandLine: >
+        curl -L -o /tmp/websquare-web-extension.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix && \
+        code --install-extension /tmp/websquare-web-extension.vsix
+      workingDir: /projects
+
+events:
+  postStart:
+    - install-extension
