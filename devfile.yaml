@@ -13,8 +13,7 @@ commands:
     exec:
       component: tools
       commandLine: >
-        curl -L -o /tmp/websquare-web-extension.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix && \
-        code --install-extension /tmp/websquare-web-extension.vsix
+        curl -L -o /tmp/websquare-web-extension.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
       workingDir: /projects
 
 events:
