@@ -13,7 +13,7 @@ commands:
     exec:
       component: tools
       commandLine: >
-        code --install-extension https://my-domain.com/extensions/my-extension-0.0.1.vsix
+        code --install-extension https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
       workingDir: /projects
       group:
         kind: build
