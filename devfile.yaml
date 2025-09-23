@@ -7,9 +7,10 @@ components:
       image: quay.io/devfile/universal-developer-image:latest
       memoryLimit: 2Gi
       mountSources: true
-    vscode:
-      extensions:
-        - https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
-events:
-  postStart:
-    - install-extension
+
+  - name: che-code
+    editor:
+      id: eclipse/che-code/latest
+      vscode:
+        extensions:
+          - https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix
