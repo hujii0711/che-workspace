@@ -1,33 +1,20 @@
 schemaVersion: 2.2.0
 metadata:
-  name: nodejs-20-workspace
-  version: 1.0.0
-
+  name: my-workspace
 components:
-  - name: nodejs
+  - name: tools
     container:
-      image: node:20
-      memoryLimit: 1Gi
+      image: quay.io/devfile/universal-developer-image:latest
+      memoryLimit: 2Gi
       mountSources: true
-      command: ['tail']
-      args: ['-f', '/dev/null']
-      env:
-        - name: NODE_ENV
-          value: development
-      endpoints:
-        - name: nodejs-app
-          targetPort: 3000
-          exposure: public
-          protocol: http
 
 commands:
-  - id: install-deps
+  - id: install-extension
     exec:
-      component: nodejs
-      commandLine: "npm install"
+      component: tools
+      commandLine: >
+        code --install-extension https://my-domain.com/extensions/my-extension-0.0.1.vsix
       workingDir: /projects
-  - id: run-app
-    exec:
-      component: nodejs
-      commandLine: "npm start"
-      workingDir: /projects
+      group:
+        kind: build
+        isDefault: true
