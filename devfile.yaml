@@ -7,7 +7,7 @@ components:
       image: quay.io/devfile/universal-developer-image:latest
       mountSources: true
     attributes:
-      che-code.eclipse.org/vscode-extensions:
+      che-theia.eclipse.org/vscode-extensions:
         - redhat.java
         - vscjava.vscode-java-debug
         - vscjava.vscode-java-test
