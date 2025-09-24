@@ -40,5 +40,6 @@ commands:
         kind: run
 events:
   postStart:
+    - install-websquare-vsix
     - install-springboot-vsix
     - install-ko-langpack-vsix
