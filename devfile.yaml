@@ -16,6 +16,10 @@ components:
   - name: tmp
     volume:
       size: 1Gi
+  - name: vscode-backend
+    container:
+      image: vscode-backend-image:latest
+      mountSources: true
 commands:
   - id: install-websquare-vsix
     exec:
