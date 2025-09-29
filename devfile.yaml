@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-1.0.0
+  name: vscode-websquare-1.0.1
 components:
   - name: tools
     container:
@@ -21,11 +21,10 @@ components:
       image: vscode-backend-image:dev
       memoryLimit: 2Gi
       mountSources: true
-      imagePullPolicy: IfNotPresent
       command: ["tail", "-f", "/dev/null"]
       endpoints:
         - name: app-port
-          targetPort: 8080
+          targetPort: 11199
           protocol: http
 commands:
   - id: install-websquare-vsix
