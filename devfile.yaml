@@ -16,9 +16,10 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-  - name: vscode-backend-image
+  - name: studio-message-server
     container:
       image: vscode-backend-image:latest
+      imagePullPolicy: Never
       mountSources: true
 commands:
   - id: install-websquare-vsix
