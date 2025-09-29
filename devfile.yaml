@@ -18,7 +18,7 @@ components:
       size: 1Gi
   - name: studio-message-server
     container:
-      image: vscode-backend-image:latest
+      image: localhost:5000/vscode-backend-image:latest
       mountSources: true
 commands:
   - id: install-websquare-vsix
