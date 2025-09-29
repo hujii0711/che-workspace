@@ -16,7 +16,7 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-  - name: vscode-backend
+  - name: vscode-backend-image
     container:
       image: vscode-backend-image:latest
       mountSources: true
