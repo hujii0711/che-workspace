@@ -19,7 +19,6 @@ components:
   - name: studio-message-server
     container:
       image: vscode-backend-image:dev
-      imagePullPolicy: IfNotPresent
       memoryLimit: 2Gi
       mountSources: true
 commands:
