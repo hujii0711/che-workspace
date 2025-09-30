@@ -16,6 +16,11 @@ components:
   - name: tmp
     volume:
       size: 1Gi
+  - name: studio-message-server
+    container:
+      image: test:0.0.2
+      memoryLimit: 2Gi
+      mountSources: true
 commands:
   - id: install-websquare-vsix
     exec:
