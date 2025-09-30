@@ -18,10 +18,14 @@ components:
       size: 1Gi
   - name: studio-message-server
     container:
-      image: test:0.0.2  # 1단계에서 확인한 정확한 이름
-      imagePullPolicy: Never  # 로컬 이미지만 사용
+      image: studio-message-server:latest  # latest 태그 사용
       memoryLimit: 2Gi
       mountSources: true
+      endpoints:
+        - name: webapp
+          targetPort: 11199
+          exposure: public
+          protocol: http
 commands:
   - id: install-websquare-vsix
     exec:
