@@ -16,9 +16,9 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-  - name: studio-message-server
+  - name: studio-message-server1234
     container:
-      image: vscode-backend-image:dev
+      image: test:0.0.2
       memoryLimit: 2Gi
       mountSources: true
       command: ["tail", "-f", "/dev/null"]
