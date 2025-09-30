@@ -17,23 +17,25 @@ components:
     volume:
       size: 1Gi
   - name: studio-message-server-pod
-    kubernetes:
-      inlined: |
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          name: studio-message-server
-        spec:
-          containers:
-          - name: studio-message-server
-            image: test:0.0.2
-            imagePullPolicy: Never  # 여기서 설정 가능
-            resources:
-              limits:
-                memory: 2Gi
-            ports:
-            - containerPort: 11199
-          restartPolicy: Always
+  kubernetes:
+    inlined: |
+      apiVersion: v1
+      kind: Pod
+      metadata:
+        name: studio-message-server
+      spec:
+        containers:
+        - name: studio-message-server
+          image: test:0.0.2
+          imagePullPolicy: Never
+          command: ["/bin/sh"]
+          args: ["-c", "cd /app && node app.js"]  # 디렉토리 이동 후 실행
+          resources:
+            limits:
+              memory: 2Gi
+          ports:
+          - containerPort: 11199
+        restartPolicy: Always
 commands:
   - id: install-websquare-vsix
     exec:
