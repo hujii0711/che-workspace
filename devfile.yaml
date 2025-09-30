@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-eeee
+  name: vscode-websquare-ffff
 components:
   - name: tools
     container:
@@ -32,7 +32,7 @@ components:
               limits:
                 memory: 2Gi
             ports:
-            - containerPort: 8080
+            - containerPort: 11199
           restartPolicy: Always
 commands:
   - id: install-websquare-vsix
