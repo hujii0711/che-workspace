@@ -18,7 +18,7 @@ components:
       size: 1Gi
   - name: studio-message-server
     container:
-      image: registry.kube-system.svc.cluster.local:80/test:0.0.2
+      image: registry.kube-system.svc.cluster.local/test:0.0.2
       memoryLimit: 2Gi
       mountSources: true
 commands:
