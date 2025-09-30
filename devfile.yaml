@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-cccc
+  name: vscode-websquare-dddd
 components:
   - name: tools
     container:
@@ -22,11 +22,6 @@ components:
       imagePullPolicy: Never  # 로컬 이미지만 사용
       memoryLimit: 2Gi
       mountSources: true
-      endpoints:
-        - name: webapp
-          targetPort: 11199
-          exposure: public
-          protocol: http
 commands:
   - id: install-websquare-vsix
     exec:
