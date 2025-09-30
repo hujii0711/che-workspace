@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-1.0.1
+  name: vscode-websquare
 components:
   - name: tools
     container:
@@ -16,16 +16,6 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-  - name: studio-message-server1234
-    container:
-      image: test:0.0.2
-      memoryLimit: 2Gi
-      mountSources: true
-      command: ["tail", "-f", "/dev/null"]
-      endpoints:
-        - name: app-port
-          targetPort: 11199
-          protocol: http
 commands:
   - id: install-websquare-vsix
     exec:
