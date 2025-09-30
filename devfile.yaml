@@ -16,16 +16,24 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-  - name: studio-message-server
-    container:
-      image: studio-message-server:latest  # latest 태그 사용
-      memoryLimit: 2Gi
-      mountSources: true
-      endpoints:
-        - name: webapp
-          targetPort: 11199
-          exposure: public
-          protocol: http
+  - name: studio-message-server-pod
+    kubernetes:
+      inlined: |
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: studio-message-server
+        spec:
+          containers:
+          - name: studio-message-server
+            image: test:0.0.2
+            imagePullPolicy: Never  # 여기서 설정 가능
+            resources:
+              limits:
+                memory: 2Gi
+            ports:
+            - containerPort: 8080
+          restartPolicy: Always
 commands:
   - id: install-websquare-vsix
     exec:
