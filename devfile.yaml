@@ -28,13 +28,14 @@ components:
           - name: studio-message-server
             image: test:0.0.2
             imagePullPolicy: Never
-            command: ["/bin/sh"]
-            args: ["-c", "cd /app && node app.js"]  # 디렉토리 이동 후 실행
+            command: ["node"]
+            args: ["app.js"]
             resources:
               limits:
                 memory: 2Gi
             ports:
             - containerPort: 11199
+            workingDir: /app
           restartPolicy: Always
 commands:
   - id: install-websquare-vsix
