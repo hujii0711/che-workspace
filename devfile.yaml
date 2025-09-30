@@ -18,7 +18,7 @@ components:
       size: 1Gi
   - name: studio-message-server
     container:
-      image: docker.io/library/test:0.0.2
+      image: test:0.0.2
       memoryLimit: 2Gi
       mountSources: true
 commands:
