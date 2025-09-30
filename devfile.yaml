@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-gggg
+  name: vscode-websquare-hhhh
 components:
   - name: tools
     container:
@@ -17,7 +17,7 @@ components:
     volume:
       size: 1Gi
   - name: studio-message-server-pod
-    kubernetes:
+  kubernetes:
     inlined: |
       apiVersion: v1
       kind: Pod
@@ -28,8 +28,6 @@ components:
         - name: studio-message-server
           image: test:0.0.2
           imagePullPolicy: Never
-          command: ["/bin/sh"]
-          args: ["-c", "cd /app && node app.js"]  # 디렉토리 이동 후 실행
           resources:
             limits:
               memory: 2Gi
