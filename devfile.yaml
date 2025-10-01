@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-0.0.3
+  name: vscode-websquare-0.0.4
 components:
   - name: tools
     container:
@@ -16,27 +16,6 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-  - name: studio-message-server-pod
-    kubernetes:
-      inlined: |
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          name: studio-message-server
-        spec:
-          restartPolicy: Always
-          containers:
-          - name: studio-message-server
-            image: studio-message-server-image:0.0.1
-            imagePullPolicy: IfNotPresent
-            command: ["node"]
-            args: ["app.js"]
-            resources:
-              limits:
-                memory: 2Gi
-            ports:
-            - containerPort: 11199
-            workingDir: /app
 commands:
   - id: install-websquare-vsix
     exec:
