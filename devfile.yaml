@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-0.1
+  name: vscode-websquare-0.2
 components:
   - name: tools
     container:
@@ -24,9 +24,10 @@ components:
         metadata:
           name: studio-message-server
         spec:
+          restartPolicy: Always
           containers:
           - name: studio-message-server
-            image: test:0.0.2
+            image: studio-message-server-image:0.0.1
             imagePullPolicy: Never
             command: ["node"]
             args: ["app.js"]
@@ -36,7 +37,6 @@ components:
             ports:
             - containerPort: 11199
             workingDir: /app
-          restartPolicy: Always
 commands:
   - id: install-websquare-vsix
     exec:
