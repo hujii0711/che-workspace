@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-0.0.2
+  name: vscode-websquare-0.0.3
 components:
   - name: tools
     container:
@@ -28,7 +28,7 @@ components:
           containers:
           - name: studio-message-server
             image: studio-message-server-image:0.0.1
-            imagePullPolicy: Never
+            imagePullPolicy: IfNotPresent
             command: ["node"]
             args: ["app.js"]
             resources:
