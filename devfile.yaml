@@ -22,17 +22,10 @@ components:
       image: vscode-backend-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: [
-        "mkdir -p /webserver/certs && \
-         echo \"$VS_CODE_BACKEND_KEY\" | base64 -d > /webserver/certs/vscode-backend.key && \
-         echo \"$VS_CODE_BACKEND_CERT\" | base64 -d > /webserver/certs/vscode-backend.cert && \
-         chmod 600 /webserver/certs/vscode-backend.key && \
-         cd /webserver && node dist/app.js"
+        "node dist/app.js"
       ]
       memoryLimit: 4Gi
       mountSources: true
-      volumeMounts:
-        - name: certs
-          path: /webserver/certs
       endpoints:
         - name: vscode-backend
           targetPort: 11199
@@ -40,19 +33,6 @@ components:
       env:
         - name: NODE_ENV
           value: "production"
-        - name: VS_CODE_BACKEND_KEY
-          valueFrom:
-            secretKeyRef:
-              name: vscode-certs
-              key: vscode-backend.key
-        - name: VS_CODE_BACKEND_CERT
-          valueFrom:
-            secretKeyRef:
-              name: vscode-certs
-              key: vscode-backend.cert
-  - name: certs
-    volume:
-      size: 1Gi
 
 commands:
   - id: install-websquare-vsix
