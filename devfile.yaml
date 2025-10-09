@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-0.0.3
+  name: vscode-websquare-0.0.5
 components:
   - name: tools
     container:
@@ -20,17 +20,15 @@ components:
   - name: vscode-backend-server
     container:
       image: vscode-backend-image:0.0.1
-      imagePullPolicy: Never
       command: ["/bin/sh", "-c"]
       args: [
         "mkdir -p /webserver/certs && \
          cp /certs/vscode-backend.key /webserver/certs/vscode-backend.key && \
          cp /certs/vscode-backend.cert /webserver/certs/vscode-backend.cert && \
          chmod 600 /webserver/certs/vscode-backend.key && \
-         node dist/app.js"
+         cd /webserver && node dist/app.js"  # 작업 디렉터리 변경 추가
       ]
       memoryLimit: 4Gi
-      workingDir: /webserver
       mountSources: true  # /projects 디렉터리 자동 마운트
       volumeMounts:
         - name: certs
@@ -44,6 +42,14 @@ components:
       env:
         - name: NODE_ENV
           value: "production"
+  # 볼륨 설정
+  - name: certs
+    volume:
+      size: 1Gi
+  - name: secret-certs
+    volume:
+      secret:
+        secretName: vscode-certs
 commands:
   - id: install-websquare-vsix
     exec:
