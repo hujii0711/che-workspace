@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-0.0.8
+  name: vscode-websquare-0.0.9
 components:
   - name: tools
     container:
@@ -9,7 +9,7 @@ components:
       mountSources: true
       env:
         - name: DEFAULT_EXTENSIONS
-          value: "/tmp/websquare-web-extension-1.0.0.vsix;/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix"
+          value: "/tmp/websquare-web-extension-1.0.0.vsix;/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;" #/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
       volumeMounts:
         - name: tmp
           path: /tmp
@@ -32,13 +32,13 @@ commands:
         curl -L --fail --silent --show-error -o /tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix || { echo "Failed to download vmware.vscode-boot-dev-pack-0.2.2.vsix"; exit 1; }
       group:
         kind: run
-  - id: install-ko-langpack-vsix
-    exec:
-      component: tools
-      commandLine: |
-        curl -L --fail --silent --show-error -o /tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix || { echo "Failed to download vscode-language-pack-ko-1.105.2025091709.vsix"; exit 1; }
-      group:
-        kind: run
+  #- id: install-ko-langpack-vsix
+  #  exec:
+  #    component: tools
+  #    commandLine: |
+  #      curl -L --fail --silent --show-error -o /tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix || { echo "Failed to download vscode-language-pack-ko-1.105.2025091709.vsix"; exit 1; }
+  #    group:
+  #      kind: run
 events:
   postStart:
     - install-websquare-vsix
