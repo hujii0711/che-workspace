@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-0.0.2
+  name: vscode-websquare-0.0.3
 components:
   - name: tools
     container:
@@ -16,6 +16,34 @@ components:
   - name: tmp
     volume:
       size: 1Gi
+  # vscode-backend-server 컴포넌트
+  - name: vscode-backend-server
+    container:
+      image: vscode-backend-image:0.0.1
+      imagePullPolicy: Never
+      command: ["/bin/sh", "-c"]
+      args: [
+        "mkdir -p /webserver/certs && \
+         cp /certs/vscode-backend.key /webserver/certs/vscode-backend.key && \
+         cp /certs/vscode-backend.cert /webserver/certs/vscode-backend.cert && \
+         chmod 600 /webserver/certs/vscode-backend.key && \
+         node dist/app.js"
+      ]
+      memoryLimit: 4Gi
+      workingDir: /webserver
+      mountSources: true  # /projects 디렉터리 자동 마운트
+      volumeMounts:
+        - name: certs
+          path: /webserver/certs
+        - name: secret-certs
+          path: /certs
+      endpoints:
+        - name: vscode-backend
+          targetPort: 11199
+          exposure: internal
+      env:
+        - name: NODE_ENV
+          value: "production"
 commands:
   - id: install-websquare-vsix
     exec:
