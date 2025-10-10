@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-0.0.10
+  name: vscode-websquare-0.0.11
 components:
   - name: tools
     container:
@@ -19,7 +19,8 @@ components:
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
     container:
-      image: vscode-backend-image:0.0.1
+      image: docker.io/vscode-backend-image:0.0.1
+      imagePullPolicy: Never  # 로컬 이미지 사용 강제
       command: ["/bin/sh", "-c"]
       args: [
         "node dist/app.js"
