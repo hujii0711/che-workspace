@@ -1,7 +1,7 @@
 schemaVersion: 2.2.0
 metadata:
   #name: vscode-websquare-0.0.19
-  generateName: vscode-websquare-  # 고정 이름 대신 동적 생성
+  generateName: vscode-websquare  # 고정 이름 대신 동적 생성
 components:
   - name: tools
     container:
@@ -21,7 +21,7 @@ components:
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
     container:
-      image: vscode-backend-image:0.0.1
+      image: localhost:5000/vscode-backend-image:0.0.1 #vscode-backend-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: [
         "node dist/app.js"
