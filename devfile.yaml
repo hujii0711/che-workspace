@@ -18,37 +18,23 @@ components:
     volume:
       size: 1Gi
 
-  # container 대신 kubernetes 컴포넌트를 사용하여 Kubernetes Pod 사양을 직접 정의.
+  # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
-    kubernetes:
-      inlined: |
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          name: vscode-backend-server
-        spec:
-          containers:
-          - name: vscode-backend-server
-            image: vscode-backend-image:0.0.1
-            imagePullPolicy: IfNotPresent
-            command: ["/bin/sh", "-c"]
-            args: ["node dist/app.js"]
-            resources:
-              limits:
-                memory: "2Gi"
-            volumeMounts:
-            - name: projects
-              mountPath: /projects
-            ports:
-            - containerPort: 11199
-              name: vscode-backend
-            env:
-            - name: NODE_ENV
-              value: "production"
-          volumes:
-          - name: projects
-            emptyDir:
-              sizeLimit: 1Gi
+    container:
+      image: vscode-backend-image:0.0.1
+      command: ["/bin/sh", "-c"]
+      args: [
+        "node dist/app.js"
+      ]
+      memoryLimit: 4Gi
+      mountSources: true
+      endpoints:
+        - name: vscode-backend
+          targetPort: 11199
+          exposure: internal
+      env:
+        - name: NODE_ENV
+          value: "production"
 
 commands:
   - id: install-websquare-vsix
