@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-0.0.18
+  name: vscode-websquare-0.0.19
 components:
   - name: tools
     container:
@@ -29,7 +29,7 @@ components:
           containers:
           - name: vscode-backend-server
             image: vscode-backend-image:0.0.1
-            imagePullPolicy: Never
+            imagePullPolicy: IfNotPresent
             command: ["/bin/sh", "-c"]
             args: ["node dist/app.js"]
             resources:
