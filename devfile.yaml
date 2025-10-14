@@ -10,7 +10,7 @@ components:
       mountSources: true
       env:
         - name: DEFAULT_EXTENSIONS
-          value: "/tmp/websquare-web-extension-1.0.0.vsix;" #/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+          value: "/tmp/websquare-web-extension-1.0.1.vsix;" #/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
       volumeMounts:
         - name: tmp
           path: /tmp
@@ -26,7 +26,7 @@ components:
       args: [
         "node dist/app.js"
       ]
-      memoryLimit: 4Gi
+      memoryLimit: 3Gi
       mountSources: true
       endpoints:
         - name: vscode-backend
