@@ -10,7 +10,7 @@ components:
       mountSources: true
       env:
         - name: DEFAULT_EXTENSIONS
-          value: "/tmp/websquare-web-extension-1.0.2.vsix;" #/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+          value: "/tmp/websquare-web-extension-1.0.4.vsix;" #/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
       volumeMounts:
         - name: tmp
           path: /tmp
@@ -44,7 +44,7 @@ commands:
     exec:
       component: tools
       commandLine: |
-        curl -L --fail --silent --show-error -o /tmp/websquare-web-extension-1.0.2.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.2.vsix || { echo "Failed to download websquare-web-extension-1.0.2.vsix"; exit 1; }
+        curl -L --fail --silent --show-error -o /tmp/websquare-web-extension-1.0.4.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.4.vsix || { echo "Failed to download websquare-web-extension-1.0.4.vsix"; exit 1; }
       group:
         kind: run
   #- id: install-springboot-vsix
