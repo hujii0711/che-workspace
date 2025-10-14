@@ -22,38 +22,42 @@ components:
     container:
       image: localhost:5000/vscode-backend-image:0.0.1
       command: ["/bin/sh", "-c"]
-      # args: [
-      #     "mkdir -p /webserver/certs && \
-      #     cp /certs/vscode-backend.key /webserver/certs/vscode-backend.key && \
-      #     cp /certs/vscode-backend.cert /webserver/certs/vscode-backend.cert && \
-      #     chmod 600 /webserver/certs/vscode-backend.key && \
-      #     node dist/app.js",
-      # ]
-      args: [ "node dist/app.js" ]
+      args: [
+          "mkdir -p /webserver/certs && \
+          cp /certs/vscode-backend.key /webserver/certs/vscode-backend.key && \
+          cp /certs/vscode-backend.cert /webserver/certs/vscode-backend.cert && \
+          chmod 600 /webserver/certs/vscode-backend.key && \
+          node dist/app.js",
+      ]
       memoryLimit: 2Gi
       mountSources: true # /projects 디렉터리 자동 마운트
-      # volumeMounts:
-      #   - name: certs
-      #     path: /webserver/certs
-      #   - name: secret-certs
-      #     path: /certs
+      volumeMounts:
+        - name: certs
+          path: /webserver/certs
+        - name: secret-certs
+          path: /certs
       endpoints:
         - name: vscode-backend
           targetPort: 11199
-          exposure: internal
+          exposure: public  # 외부 접근 허용 (필요 시 internal 유지)
+          protocol: https   # HTTPS 프로토콜 명시
+          secure: true      # TLS 활성화
+          attributes:
+            controller.devfile.io/endpoint-tls-secret: vscode-certs  # TLS Secret 참조 (선택 사항)
+            controller.devfile.io/ingress-tls: true
       env:
         - name: NODE_ENV
           value: "production"
-    # attributes:
-    #   controller.devfile.io/volume-mount-secret: # Kubernetes 전용 설정으로 비밀 마운트 추가
-    #     secret-certs:
-    #       secretName: vscode-certs
-  # - name: certs
-  #   volume:
-  #     size: 1Gi
-  # - name: secret-certs
-  #   volume:
-  #     size: 1Gi
+    attributes:
+      controller.devfile.io/volume-mount-secret: # Kubernetes 전용 설정으로 비밀 마운트 추가
+        secret-certs:
+          secretName: vscode-certs
+  - name: certs
+    volume:
+      size: 1Gi
+  - name: secret-certs
+    volume:
+      size: 1Gi
 
 commands:
   - id: install-websquare-vsix
