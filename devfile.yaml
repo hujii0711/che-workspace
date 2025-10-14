@@ -34,13 +34,15 @@ components:
           exposure: public # 외부 접근 허용 (필요 시 internal 유지)
           protocol: https # HTTPS 프로토콜 명시
           secure: true # TLS 활성화
+    attributes:
+      controller.devfile.io/volume-mount-secret:
+        secret-certs:
+          secretName: vscode-certs
       env:
         - name: NODE_ENV
           value: "production"
   - name: secret-certs
-    volume:
-      secret:
-        secretName: vscode-certs
+    volume: {}
 
 commands:
   - id: install-websquare-vsix
