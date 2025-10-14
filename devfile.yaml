@@ -17,22 +17,46 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
     container:
-      image: localhost:5000/vscode-backend-image:0.0.1 #vscode-backend-image:0.0.1
+      image: localhost:5000/vscode-backend-image:0.0.1
       command: ["/bin/sh", "-c"]
-      args: ["node dist/app.js"]
-      memoryLimit: 4Gi
-      #mountSources: true　# /projects 디렉터리 자동 마운트
+      args: [
+          "mkdir -p /webserver/certs && \
+          cp /certs/tls.key /webserver/certs/vscode-backend.key && \
+          cp /certs/tls.crt /webserver/certs/vscode-backend.cert && \
+          chmod 600 /webserver/certs/vscode-backend.key && \
+          node dist/app.js"
+        ]
+      memoryLimit: 2Gi
+      mountSources: true # /projects 디렉터리 자동 마운트
+      volumeMounts:
+        - name: certs
+          path: /webserver/certs
+        - name: secret-certs
+          path: /certs #시크릿 타입이 tls이므로 쿠버네티스가 자동으로 다음 이름으로 파일을 생성 /certs/tls.key, /certs/tls.crt
       endpoints:
         - name: vscode-backend
           targetPort: 11199
-          exposure: internal
+          exposure: public # 외부 접근 허용 (필요 시 internal 유지)
+          protocol: https # HTTPS 프로토콜 명시
+          secure: true # TLS 활성화
+          # attributes:
+          #   controller.devfile.io/endpoint-tls-secret: vscode-certs  # 클러스터 네임스페이스에 해당 vscode-certs 이 존재해야 동작
+          #   controller.devfile.io/ingress-tls: true
       env:
         - name: NODE_ENV
           value: "production"
+    attributes:
+      controller.devfile.io/volume-mount-secret: # Kubernetes 전용 설정으로 비밀 마운트 추가
+        secret-certs:
+          secretName: vscode-certs
+  - name: certs
+    volume:
+      size: 1Gi
+  - name: secret-certs
+    volume: {}
 
 commands:
   - id: install-websquare-vsix
