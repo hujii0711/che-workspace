@@ -42,18 +42,16 @@ components:
           exposure: public  # 외부 접근 허용 (필요 시 internal 유지)
           protocol: https   # HTTPS 프로토콜 명시
           secure: true      # TLS 활성화
-          attributes:
-            controller.devfile.io/endpoint-tls-secret: vscode-certs  # 클러스터 네임스페이스에 해당 vscode-certs 이 존재해야 동작
-            controller.devfile.io/ingress-tls: true
+          # attributes:
+          #   controller.devfile.io/endpoint-tls-secret: vscode-certs  # 클러스터 네임스페이스에 해당 vscode-certs 이 존재해야 동작
+          #   controller.devfile.io/ingress-tls: true
       env:
         - name: NODE_ENV
           value: "production"
-    # attributes:
-    #   controller.devfile.io/volume-mount-secret: # Kubernetes 전용 설정으로 비밀 마운트 추가
-    #     secret-certs:
-    #       secretName: vscode-certs
-    # attributes:
-    #   controller.devfile.io/volume-mount-secret: '{"secret-certs":{"secretName":"vscode-certs"}}'
+    attributes:
+      controller.devfile.io/volume-mount-secret: # Kubernetes 전용 설정으로 비밀 마운트 추가
+        secret-certs:
+          secretName: vscode-certs
   - name: certs
     volume:
       size: 1Gi
