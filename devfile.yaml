@@ -24,8 +24,8 @@ components:
       command: ["/bin/sh", "-c"]
       args: [
           "mkdir -p /webserver/certs && \
-          cp /certs/vscode-backend.key /webserver/certs/vscode-backend.key && \
-          cp /certs/vscode-backend.cert /webserver/certs/vscode-backend.cert && \
+          cp /certs/tls.key /webserver/certs/vscode-backend.key && \
+          cp /certs/tls.cert /webserver/certs/vscode-backend.cert && \
           chmod 600 /webserver/certs/vscode-backend.key && \
           node dist/app.js",
       ]
