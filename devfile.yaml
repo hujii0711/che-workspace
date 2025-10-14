@@ -52,8 +52,8 @@ components:
     #   controller.devfile.io/volume-mount-secret: # Kubernetes 전용 설정으로 비밀 마운트 추가
     #     secret-certs:
     #       secretName: vscode-certs
-    attributes:
-      controller.devfile.io/volume-mount-secret: '{"secret-certs":{"secretName":"vscode-certs"}}'
+    # attributes:
+    #   controller.devfile.io/volume-mount-secret: '{"secret-certs":{"secretName":"vscode-certs"}}'
   - name: certs
     volume:
       size: 1Gi
