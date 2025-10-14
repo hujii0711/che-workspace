@@ -43,13 +43,18 @@ components:
       env:
         - name: NODE_ENV
           value: "production"
-  - name: certs
-    volume:
-      size: 1Gi
-  - name: secret-certs
-    volume:
-      secret:
-        secretName: vscode-certs
+    attributes:
+      # Kubernetes 전용 설정으로 비밀 마운트 추가
+      controller.devfile.io/volume-mount-secret:
+        secret-certs:
+          secretName: vscode-certs
+    - name: certs
+      volume:
+        size: 1Gi
+  # - name: secret-certs
+  #   volume:
+  #     secret:
+  #       secretName: vscode-certs
 
 commands:
   - id: install-websquare-vsix
