@@ -51,6 +51,9 @@ components:
   - name: certs
     volume:
       size: 1Gi
+  - name: secret-certs
+    volume:
+      size: 1Gi
   # - name: secret-certs
   #   volume:
   #     secret:
