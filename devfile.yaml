@@ -48,9 +48,9 @@ components:
       controller.devfile.io/volume-mount-secret:
         secret-certs:
           secretName: vscode-certs
-    - name: certs
-      volume:
-        size: 1Gi
+  - name: certs
+    volume:
+      size: 1Gi
   # - name: secret-certs
   #   volume:
   #     secret:
