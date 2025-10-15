@@ -17,7 +17,9 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-
+  - name: secret-certs
+    volume: {}
+    
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
     container:
@@ -29,7 +31,7 @@ components:
       mountSources: true
       #시크릿 타입이 tls이므로 쿠버네티스가 자동으로 다음 이름으로 파일을 생성 /certs/tls.key, /certs/tls.crt
       volumeMounts:
-        - name: secret-certs01
+        - name: secret-certs
           path: /webserver/certs
       endpoints:
         - name: vscode-backend
@@ -47,12 +49,9 @@ components:
     attributes:
       # DevWorkspace가 Secret을 자동으로 컨테이너에 마운트하도록 지시
       controller.devfile.io/volume-mount-secret:
-        secret-certs01:
+        secret-certs:
           # 실제 쿠버네티스 Secret 리소스 이름
           secretName: vscode-certs
-  # - name: secret-certs
-  #   volume: {}
-
 commands:
   - id: install-websquare-vsix
     exec:
