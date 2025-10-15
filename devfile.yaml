@@ -17,7 +17,8 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-    
+  # - name: secret-certs
+  #   volume: {}  
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
     container:
