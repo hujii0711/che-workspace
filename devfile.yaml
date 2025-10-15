@@ -29,7 +29,7 @@ components:
       mountSources: true
       #시크릿 타입이 tls이므로 쿠버네티스가 자동으로 다음 이름으로 파일을 생성 /certs/tls.key, /certs/tls.crt
       volumeMounts:
-        - name: secret-certsA
+        - name: secret-certs01
           path: /webserver/certs
       endpoints:
         - name: vscode-backend
@@ -47,7 +47,7 @@ components:
     attributes:
       # DevWorkspace가 Secret을 자동으로 컨테이너에 마운트하도록 지시
       controller.devfile.io/volume-mount-secret:
-        secret-certsA:
+        secret-certs01:
           # 실제 쿠버네티스 Secret 리소스 이름
           secretName: vscode-certs
   # - name: secret-certs
