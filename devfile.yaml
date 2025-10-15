@@ -47,8 +47,8 @@ components:
       env:
         - name: NODE_ENV
           value: "production"
-  - name: secret-certs
-    volume: {}
+  # - name: secret-certs
+  #   volume: {}
 
 commands:
   - id: install-websquare-vsix
