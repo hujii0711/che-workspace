@@ -17,32 +17,22 @@ components:
   - name: tmp
     volume:
       size: 1Gi
+
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
     container:
-      image: localhost:5000/vscode-backend-image:0.0.1
+      image: localhost:5000/vscode-backend-image:0.0.1 #vscode-backend-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
-      memoryLimit: 2Gi
-      mountSources: true # /projects 디렉터리 자동 마운트
-      volumeMounts:
-        - name: secret-certs
-          path: /certs #시크릿 타입이 tls이므로 쿠버네티스가 자동으로 다음 이름으로 파일을 생성 /certs/tls.key, /certs/tls.crt
+      memoryLimit: 3Gi
+      mountSources: true　# /projects 디렉터리 자동 마운트
       endpoints:
         - name: vscode-backend
           targetPort: 11199
-          exposure: public # 외부 접근 허용 (필요 시 internal 유지)
-          protocol: https # HTTPS 프로토콜 명시
-          secure: true # TLS 활성화
-    attributes:
-      controller.devfile.io/volume-mount-secret:
-        secret-certs:
-          secretName: vscode-certs
+          exposure: internal
       env:
         - name: NODE_ENV
           value: "production"
-  - name: secret-certs
-    volume: {}
 
 commands:
   - id: install-websquare-vsix
