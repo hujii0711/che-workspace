@@ -25,7 +25,8 @@ components:
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
       memoryLimit: 3Gi
-      mountSources: true　# /projects 디렉터리 자동 마운트
+      # /projects 디렉터리 자동 마운트
+      mountSources: true
       endpoints:
         - name: vscode-backend
           targetPort: 11199
