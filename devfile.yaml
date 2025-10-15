@@ -17,8 +17,8 @@ components:
   - name: tmp
     volume:
       size: 1Gi
-  - name: secret-certs
-    volume: {}
+  # - name: secret-certs
+  #   volume: {}
     
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
@@ -38,11 +38,11 @@ components:
           targetPort: 11199
           exposure: internal
           # 외부 접근 허용 (필요 시 internal 유지)
-          # exposure: public
-          # # HTTPS 프로토콜 명시
-          # protocol: https
-          # # TLS 활성화
-          # secure: true
+          #exposure: public
+          # HTTPS 프로토콜 명시
+          #protocol: https
+          # TLS 활성화
+          #secure: true
       env:
       - name: NODE_ENV
         value: "production"
