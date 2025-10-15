@@ -33,16 +33,16 @@ components:
       volumeMounts:
         - name: secret-certs
           path: /webserver/certs
-      # endpoints:
-      #   - name: vscode-backend
-      #     targetPort: 11199
-      #     # exposure: internal
-      #     # 외부 접근 허용 (필요 시 internal 유지)
-      #     exposure: public
-      #     # HTTPS 프로토콜 명시
-      #     protocol: https
-      #     # TLS 활성화
-      #     secure: true
+      endpoints:
+        - name: vscode-backend
+          targetPort: 11199
+          exposure: internal
+          # 외부 접근 허용 (필요 시 internal 유지)
+          # exposure: public
+          # # HTTPS 프로토콜 명시
+          # protocol: https
+          # # TLS 활성화
+          # secure: true
       env:
       - name: NODE_ENV
         value: "production"
