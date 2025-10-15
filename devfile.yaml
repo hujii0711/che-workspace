@@ -35,7 +35,7 @@ components:
         - name: vscode-backend
           targetPort: 11199
           # 외부 접근 허용 (필요 시 internal 유지)
-          exposure: internal
+          exposure: public
           # HTTPS 프로토콜 명시
           protocol: https
           # TLS 활성화
