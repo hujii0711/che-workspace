@@ -44,9 +44,6 @@ components:
       controller.devfile.io/volume-mount-secret:
         secret-certs:
           secretName: vscode-certs
-        #Kubernetes 컨테이너 스펙 오버라이드  
-        #container-overrides:
-        #  workingDir: /webserver
       env:
         - name: NODE_ENV
           value: "production"
