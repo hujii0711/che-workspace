@@ -24,7 +24,7 @@ components:
       image: localhost:5000/vscode-backend-https-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
-      memoryLimit: 2Gi
+      memoryLimit: 4Gi
       # /projects 디렉터리 자동 마운트
       mountSources: true
       #시크릿 타입이 tls이므로 쿠버네티스가 자동으로 다음 이름으로 파일을 생성 /certs/tls.key, /certs/tls.crt
