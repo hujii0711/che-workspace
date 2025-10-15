@@ -34,12 +34,13 @@ components:
       endpoints:
         - name: vscode-backend
           targetPort: 11199
+          exposure: internal
           # 외부 접근 허용 (필요 시 internal 유지)
-          exposure: public
+          #exposure: public
           # HTTPS 프로토콜 명시
-          protocol: https
+          #protocol: https
           # TLS 활성화
-          secure: true
+          #secure: true
     attributes:
       controller.devfile.io/volume-mount-secret:
         secret-certs:
@@ -48,9 +49,7 @@ components:
         - name: NODE_ENV
           value: "production"
   - name: secret-certs
-    volume:
-      size: 1Gi
-    #volume: {}
+    volume: {}
 
 commands:
   - id: install-websquare-vsix
