@@ -18,7 +18,12 @@ components:
     volume:
       size: 1Gi
   # - name: secret-certs
-  #   volume: {}  
+  #   volume: {}
+  
+  # Secret 마운트를 위해 최소 정의, Operator가 Secret을 주입
+  - name: secret-certs
+    volume:
+      ephemeral: true
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
     container:
