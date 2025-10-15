@@ -27,6 +27,7 @@ components:
       memoryLimit: 2Gi
       # /projects 디렉터리 자동 마운트
       mountSources: true
+      workingDir: /webserver
       #시크릿 타입이 tls이므로 쿠버네티스가 자동으로 다음 이름으로 파일을 생성 /certs/tls.key, /certs/tls.crt
       volumeMounts:
         - name: secret-certs
