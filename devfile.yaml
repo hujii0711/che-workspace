@@ -10,7 +10,7 @@ components:
       mountSources: true
       env:
         - name: DEFAULT_EXTENSIONS
-          value: "/tmp/websquare-web-extension-http-1.0.1.vsix;" #/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+          value: "/tmp/websquare-web-extension-1.0.0.vsix;" #/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
       volumeMounts:
         - name: tmp
           path: /tmp
@@ -21,7 +21,7 @@ components:
   # vscode-backend-server 컴포넌트
   - name: vscode-backend-server
     container:
-      image: localhost:5000/vscode-backend-http-image:0.0.1 #vscode-backend-image:0.0.1
+      image: localhost:5000/vscode-backend-image:0.0.1 #vscode-backend-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
       memoryLimit: 3Gi
@@ -40,7 +40,7 @@ commands:
     exec:
       component: tools
       commandLine: |
-        curl -L --fail --silent --show-error -o /tmp/websquare-web-extension-http-1.0.1.vsix https://hujii0711.github.io/savezone/websquare-web-extension-http-1.0.1.vsix || { echo "Failed to download websquare-web-extension-http-1.0.1.vsix"; exit 1; }
+        curl -L --fail --silent --show-error -o /tmp/websquare-web-extension-1.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-extension-1.0.0.vsix || { echo "Failed to download websquare-web-extension-1.0.0.vsix"; exit 1; }
       group:
         kind: run
   #- id: install-springboot-vsix
