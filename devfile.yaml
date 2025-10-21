@@ -6,7 +6,7 @@ components:
   - name: tools
     container:
       image: quay.io/devfile/universal-developer-image:latest
-      memoryLimit: 2Gi
+      memoryLimit: 1Gi
       mountSources: true
       env:
       - name: DEFAULT_EXTENSIONS
@@ -19,7 +19,7 @@ components:
       image: localhost:5000/studio-message-server-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
-      memoryLimit: 3Gi
+      memoryLimit: 2Gi
       # /projects 디렉터리 자동 마운트
       mountSources: true
       volumeMounts:
@@ -39,6 +39,8 @@ components:
       controller.devfile.io/volume-mount-secret:
         secret-certs:
           secretName: vscode-certs
+      controller.devfile.io/ingress-annotations: |
+        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
   - name: vsix
     volume:
       size: 1Gi
@@ -77,6 +79,6 @@ commands:
 events:
   postStart:
     - download-websquare-vsix
-    # - download-websquare-project
+    - download-websquare-project
     #- install-springboot-vsix
     #- install-ko-langpack-vsix
