@@ -40,7 +40,8 @@ components:
         secret-certs:
           secretName: vscode-certs
       controller.devfile.io/ingress-annotations: |
-        nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+              nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+              nginx.ingress.kubernetes.io/ssl-passthrough: true
   - name: vsix
     volume:
       size: 1Gi
