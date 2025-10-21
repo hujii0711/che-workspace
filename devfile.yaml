@@ -77,6 +77,6 @@ commands:
 events:
   postStart:
     - download-websquare-vsix
-    - download-websquare-project
+    # - download-websquare-project
     #- install-springboot-vsix
     #- install-ko-langpack-vsix
