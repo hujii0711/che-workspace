@@ -6,17 +6,18 @@ components:
   - name: vsix
     volume:
       size: 1Gi
-  - name: template
+  - name: hostpath-store
     volume:
-      size: 1Gi
+      persistentVolumeClaim:
+        claimName: ws-template-pvc
   - name: tools
     container:
       image: quay.io/devfile/universal-developer-image:latest
       memoryLimit: 2Gi
       mountSources: true
-      #env:
-      # - name: DEFAULT_EXTENSIONS
-      #   value: "/ws-vsix/websquare-web-https-extension-5.0.0.vsix;" #/custom-vsix/vmware.vscode-boot-dev-pack-0.2.2.vsix;/custom-vsix/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+      env:
+      - name: DEFAULT_EXTENSIONS
+        value: "/ws-vsix/websquare-web-https-extension-5.0.0.vsix;" #/custom-vsix/vmware.vscode-boot-dev-pack-0.2.2.vsix;/custom-vsix/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
       volumeMounts:
         - name: vsix
           path: /ws-vsix
@@ -29,8 +30,8 @@ components:
       # /projects 디렉터리 자동 마운트
       mountSources: true
       volumeMounts:
-        - name: template
-          path: /ws-template
+        - name: hostpath-store
+          path: /ws-store/template  # 컨테이너 내 마운트 경로
       endpoints:
         - name: studio-message
           targetPort: 11199
