@@ -19,12 +19,12 @@ components:
       size: 1Gi
   # - name: secret-certs
   #   volume: {}
-  - name: vscode-backend-server
+  - name: studio-message-server
     container:
-      image: localhost:5000/vscode-backend-https-image:0.0.1
+      image: localhost:5000/studio-message-server-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
-      memoryLimit: 4Gi
+      memoryLimit: 3Gi
       # /projects 디렉터리 자동 마운트
       mountSources: true
       #시크릿 타입이 tls이므로 쿠버네티스가 자동으로 다음 이름으로 파일을 생성 /certs/tls.key, /certs/tls.crt
@@ -32,7 +32,7 @@ components:
       #   - name: secret-certs
       #     path: /webserver/certs
       endpoints:
-        - name: vscode-backend
+        - name: studio-message
           targetPort: 11199
           # 외부 접근 허용 (필요 시 internal 유지)
           exposure: public
