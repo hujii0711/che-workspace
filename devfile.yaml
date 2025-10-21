@@ -8,9 +8,9 @@ components:
       image: quay.io/devfile/universal-developer-image:latest
       memoryLimit: 2Gi
       mountSources: true
-      env:
-        - name: DEFAULT_EXTENSIONS
-          value: "/ws-store/vsix/websquare-web-https-extension-5.0.0.vsix;" #/ws-store/vsix/vmware.vscode-boot-dev-pack-0.2.2.vsix;/ws-store/vsix/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+      #env:
+      #  - name: DEFAULT_EXTENSIONS
+      #    value: "/ws-store/vsix/websquare-web-https-extension-5.0.0.vsix;" #/ws-store/vsix/vmware.vscode-boot-dev-pack-0.2.2.vsix;/ws-store/vsix/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
       volumeMounts:
         - name: vsix
           path: /ws-store/vsix
@@ -45,11 +45,18 @@ components:
         secret-certs:
           secretName: vscode-certs
 commands:
-  - id: install-websquare-vsix
+  - id: download-websquare-vsix
     exec:
       component: tools
       commandLine: |
         curl -L -o /ws-store/vsix/websquare-web-https-extension-5.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-extension-5.0.0.vsix
+      group:
+        kind: run
+  - id: download-websquare-project
+    exec:
+      component: tools
+      commandLine: |
+        curl -L -o /ws-store/template/WebsquareProject.zip https://hujii0711.github.io/savezone/WebsquareProject.zip
       group:
         kind: run
   #- id: install-springboot-vsix
@@ -68,6 +75,7 @@ commands:
   #      kind: run
 events:
   postStart:
-    - install-websquare-vsix
+    - download-websquare-vsix
+    - download-websquare-project
     #- install-springboot-vsix
     #- install-ko-langpack-vsix
