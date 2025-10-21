@@ -8,9 +8,9 @@ components:
       image: quay.io/devfile/universal-developer-image:latest
       memoryLimit: 2Gi
       mountSources: true
-      #env:
-      #  - name: DEFAULT_EXTENSIONS
-      #    value: "/ws-store/vsix/websquare-web-https-extension-5.0.0.vsix;" #/ws-store/vsix/vmware.vscode-boot-dev-pack-0.2.2.vsix;/ws-store/vsix/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+      env:
+       - name: DEFAULT_EXTENSIONS
+         value: "/ws-store/vsix/websquare-web-https-extension-5.0.0.vsix;" #/ws-store/vsix/vmware.vscode-boot-dev-pack-0.2.2.vsix;/ws-store/vsix/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
       volumeMounts:
         - name: vsix
           path: /ws-store/vsix
