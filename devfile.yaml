@@ -3,9 +3,6 @@ metadata:
   #name: vscode-websquare-0.0.19
   generateName: vscode-websquare # 고정 이름 대신 동적 생성
 components:
-  - name: vsix
-    volume:
-      size: 1Gi
   - name: tools
     container:
       image: quay.io/devfile/universal-developer-image:latest
@@ -26,8 +23,8 @@ components:
       # /projects 디렉터리 자동 마운트
       mountSources: true
       volumeMounts:
-        - name: hostpath-store
-          path: /ws-template  # 컨테이너 내 마운트 경로
+        - name: template
+          path: /ws-template
       endpoints:
         - name: studio-message
           targetPort: 11199
@@ -37,25 +34,17 @@ components:
       env:
       - name: NODE_ENV
         value: "production"
-      kubernetes:
-        deploy:
-          apiVersion: v1
-          kind: Pod
-          spec:
-            volumes:
-              - name: hostpath-store
-                persistentVolumeClaim:
-                  claimName: ws-template-pvc
-            containers:
-              - name: studio-message-server
-                volumeMounts:
-                  - name: hostpath-store
-                    mountPath: /ws-template  
     attributes:
       # DevWorkspace가 Secret을 자동으로 컨테이너에 마운트하도록 지시
       controller.devfile.io/volume-mount-secret:
         secret-certs:
           secretName: vscode-certs
+  - name: vsix
+    volume:
+      size: 1Gi
+  - name: template
+    volume:
+      size: 1Gi   
 commands:
   - id: download-websquare-vsix
     exec:
@@ -64,13 +53,13 @@ commands:
         curl -L -o /ws-vsix/websquare-web-https-extension-5.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-extension-5.0.0.vsix
       group:
         kind: run
-  # - id: download-websquare-project
-  #   exec:
-  #     component: studio-message-server
-  #     commandLine: |
-  #       curl -L -o /ws-template/WebsquareProject.zip https://hujii0711.github.io/savezone/WebsquareProject.zip
-  #     group:
-  #       kind: run
+  - id: download-websquare-project
+    exec:
+      component: studio-message-server
+      commandLine: |
+        curl -L -o /ws-template/WebsquareProject.zip https://hujii0711.github.io/savezone/WebsquareProject.zip
+      group:
+        kind: run
   #- id: install-springboot-vsix
   #  exec:
   #    component: tools
@@ -88,6 +77,6 @@ commands:
 events:
   postStart:
     - download-websquare-vsix
-    # - download-websquare-project
+    - download-websquare-project
     #- install-springboot-vsix
     #- install-ko-langpack-vsix
