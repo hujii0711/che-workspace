@@ -1,7 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  #name: vscode-websquare-0.0.19
-  generateName: vscode-websquare # 고정 이름 대신 동적 생성
+  name: vscode-websquare-v01
 components:
   - name: tools
     container:
@@ -10,7 +9,7 @@ components:
       mountSources: true
       env:
       - name: DEFAULT_EXTENSIONS
-        value: "/ws-vsix/websquare-web-https-extension-5.0.0.vsix;" #/custom-vsix/vmware.vscode-boot-dev-pack-0.2.2.vsix;/custom-vsix/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+        value: "/ws-vsix/websquare-web-https-extension-1.0.0.vsix;"
       volumeMounts:
         - name: vsix
           path: /ws-vsix
@@ -20,28 +19,18 @@ components:
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
       memoryLimit: 2Gi
-      # /projects 디렉터리 자동 마운트
       mountSources: true
       volumeMounts:
         - name: template
           path: /ws-template
       endpoints:
-        - name: studio-message
+        - name: studio-message-endpoint
           targetPort: 11199
           exposure: public
-          protocol: https
-          secure: true
+          protocol: http
       env:
       - name: NODE_ENV
         value: "production"
-    attributes:
-      # DevWorkspace가 Secret을 자동으로 컨테이너에 마운트하도록 지시
-      controller.devfile.io/volume-mount-secret:
-        secret-certs:
-          secretName: vscode-certs
-      controller.devfile.io/ingress-annotations: |
-              nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-              nginx.ingress.kubernetes.io/ssl-passthrough: true
   - name: vsix
     volume:
       size: 1Gi
@@ -53,7 +42,7 @@ commands:
     exec:
       component: tools
       commandLine: |
-        curl -L -o /ws-vsix/websquare-web-https-extension-5.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-extension-5.0.0.vsix
+        curl -L -o /ws-vsix/websquare-web-https-extension-1.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-extension-1.0.0.vsix
       group:
         kind: run
   - id: download-websquare-project
@@ -63,23 +52,7 @@ commands:
         curl -L -o /ws-template/WebsquareProject.zip https://hujii0711.github.io/savezone/WebsquareProject.zip
       group:
         kind: run
-  #- id: install-springboot-vsix
-  #  exec:
-  #    component: tools
-  #    commandLine: |
-  #      curl -L --fail --silent --show-error -o /tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix || { echo "Failed to download vmware.vscode-boot-dev-pack-0.2.2.vsix"; exit 1; }
-  #    group:
-  #      kind: run
-  #- id: install-ko-langpack-vsix
-  #  exec:
-  #    component: tools
-  #    commandLine: |
-  #      curl -L --fail --silent --show-error -o /tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix || { echo "Failed to download vscode-language-pack-ko-1.105.2025091709.vsix"; exit 1; }
-  #    group:
-  #      kind: run
 events:
   postStart:
     - download-websquare-vsix
     - download-websquare-project
-    #- install-springboot-vsix
-    #- install-ko-langpack-vsix
