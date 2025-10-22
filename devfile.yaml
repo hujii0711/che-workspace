@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  name: vscode-websquare-v03
+  name: vscode-websquare-v05
 components:
   - name: tools
     container:
