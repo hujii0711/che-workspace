@@ -24,7 +24,7 @@ components:
         - name: template
           path: /ws-template
       endpoints:
-        - name: studio-message
+        - name: studio-message-endpoint
           targetPort: 11199
           exposure: public
           protocol: http
