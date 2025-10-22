@@ -6,39 +6,30 @@ components:
   - name: tools
     container:
       image: quay.io/devfile/universal-developer-image:latest
-      memoryLimit: 2Gi
+      memoryLimit: 1Gi
       mountSources: true
       env:
-        - name: DEFAULT_EXTENSIONS
-          value: "/tmp/websquare-web-https-extension-1.0.0.vsix;" #/tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix;/tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
+      - name: DEFAULT_EXTENSIONS
+        value: "/ws-vsix/websquare-web-https-extension-5.0.0.vsix;" #/custom-vsix/vmware.vscode-boot-dev-pack-0.2.2.vsix;/custom-vsix/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix
       volumeMounts:
-        - name: tmp
-          path: /tmp
-  - name: tmp
-    volume:
-      size: 1Gi
-  # - name: secret-certs
-  #   volume: {}
-  - name: vscode-backend-server
+        - name: vsix
+          path: /ws-vsix
+  - name: studio-message-server
     container:
-      image: localhost:5000/vscode-backend-https-image:0.0.1
+      image: localhost:5000/studio-message-server-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
-      memoryLimit: 4Gi
+      memoryLimit: 2Gi
       # /projects 디렉터리 자동 마운트
       mountSources: true
-      #시크릿 타입이 tls이므로 쿠버네티스가 자동으로 다음 이름으로 파일을 생성 /certs/tls.key, /certs/tls.crt
-      # volumeMounts:
-      #   - name: secret-certs
-      #     path: /webserver/certs
+      volumeMounts:
+        - name: template
+          path: /ws-template
       endpoints:
-        - name: vscode-backend
+        - name: studio-message
           targetPort: 11199
-          # 외부 접근 허용 (필요 시 internal 유지)
           exposure: public
-          # HTTPS 프로토콜 명시
           protocol: https
-          # TLS 활성화
           secure: true
       env:
       - name: NODE_ENV
@@ -47,14 +38,29 @@ components:
       # DevWorkspace가 Secret을 자동으로 컨테이너에 마운트하도록 지시
       controller.devfile.io/volume-mount-secret:
         secret-certs:
-          # 실제 쿠버네티스 Secret 리소스 이름
           secretName: vscode-certs
+      controller.devfile.io/ingress-annotations: |
+              nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+              nginx.ingress.kubernetes.io/ssl-passthrough: true
+  - name: vsix
+    volume:
+      size: 1Gi
+  - name: template
+    volume:
+      size: 1Gi   
 commands:
-  - id: install-websquare-vsix
+  - id: download-websquare-vsix
     exec:
       component: tools
       commandLine: |
-        curl -L --fail --silent --show-error -o /tmp/websquare-web-https-extension-1.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-extension-1.0.0.vsix || { echo "Failed to download websquare-web-https-extension-1.0.0.vsix"; exit 1; }
+        curl -L -o /ws-vsix/websquare-web-https-extension-5.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-extension-5.0.0.vsix
+      group:
+        kind: run
+  - id: download-websquare-project
+    exec:
+      component: studio-message-server
+      commandLine: |
+        curl -L -o /ws-template/WebsquareProject.zip https://hujii0711.github.io/savezone/WebsquareProject.zip
       group:
         kind: run
   #- id: install-springboot-vsix
@@ -73,6 +79,7 @@ commands:
   #      kind: run
 events:
   postStart:
-    - install-websquare-vsix
+    - download-websquare-vsix
+    - download-websquare-project
     #- install-springboot-vsix
     #- install-ko-langpack-vsix
