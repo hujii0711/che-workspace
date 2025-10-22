@@ -1,44 +1,58 @@
 schemaVersion: 2.2.0
 metadata:
-  generateName: vscode-websquare
+  name: vscode-websquare-v01
 components:
   - name: tools
     container:
       image: quay.io/devfile/universal-developer-image:latest
-      memoryLimit: 2Gi
+      memoryLimit: 1Gi
       mountSources: true
       env:
-        - name: DEFAULT_EXTENSIONS
-          value: "/tmp/websquare-web-http-extension-1.0.0.vsix;"
+      - name: DEFAULT_EXTENSIONS
+        value: "/ws-vsix/websquare-web-https-extension-1.0.0.vsix;"
       volumeMounts:
-        - name: tmp
-          path: /tmp
-  - name: tmp
-    volume:
-      size: 1Gi
-  - name: vscode-backend-server
+        - name: vsix
+          path: /ws-vsix
+  - name: studio-message-server
     container:
-      image: localhost:5000/vscode-backend-http-image:0.0.1
+      image: localhost:5000/studio-message-server-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
-      memoryLimit: 3Gi
+      memoryLimit: 2Gi
       mountSources: true
+      volumeMounts:
+        - name: template
+          path: /ws-template
       endpoints:
-        - name: vscode-backend
+        - name: studio-message-endpoint
           targetPort: 11199
-          # 외부 접근 허용 (필요 시 internal 유지)
           exposure: public
+          protocol: http
       env:
       - name: NODE_ENV
         value: "production"
+  - name: vsix
+    volume:
+      size: 1Gi
+  - name: template
+    volume:
+      size: 1Gi   
 commands:
-  - id: install-websquare-vsix
+  - id: download-websquare-vsix
     exec:
       component: tools
       commandLine: |
-        curl -L --fail --silent --show-error -o /tmp/websquare-web-http-extension-1.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-http-extension-1.0.0.vsix || { echo "Failed to download websquare-web-http-extension-1.0.0.vsix"; exit 1; }
+        curl -L -o /ws-vsix/websquare-web-https-extension-1.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-extension-1.0.0.vsix
+      group:
+        kind: run
+  - id: download-websquare-project
+    exec:
+      component: studio-message-server
+      commandLine: |
+        curl -L -o /ws-template/WebsquareProject.zip https://hujii0711.github.io/savezone/WebsquareProject.zip
       group:
         kind: run
 events:
   postStart:
-    - install-websquare-vsix
+    - download-websquare-vsix
+    - download-websquare-project
