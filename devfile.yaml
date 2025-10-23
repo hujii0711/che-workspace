@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  #name: vscode-websquare-v02
+  #name: vscode-websquare-v02 임시 테스트용
   generateName: vscode-websquare # 고정 이름 대신 동적 생성
 components:
   - name: tools
