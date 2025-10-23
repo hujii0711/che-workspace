@@ -1,6 +1,6 @@
 schemaVersion: 2.2.0
 metadata:
-  #name: vscode-websquare-v02
+  #name: vscode-websquare-v02 임시 테스트용
   generateName: vscode-websquare # 고정 이름 대신 동적 생성
 components:
   - name: tools
@@ -60,6 +60,23 @@ commands:
         curl -L -o /ws-template/WebsquareProject.zip https://hujii0711.github.io/savezone/WebsquareProject.zip
       group:
         kind: run
+  #- id: install-springboot-vsix
+  #  exec:
+  #    component: tools
+  #    commandLine: |
+  #      curl -L --fail --silent --show-error -o /tmp/vmware.vscode-boot-dev-pack-0.2.2.vsix https://hujii0711.github.io/savezone/vmware.vscode-boot-dev-pack-0.2.2.vsix || { echo "Failed to download vmware.vscode-boot-dev-pack-0.2.2.vsix"; exit 1; }
+  #    group:
+  #      kind: run
+  #- id: install-ko-langpack-vsix
+  #  exec:
+  #    component: tools
+  #    commandLine: |
+  #      curl -L --fail --silent --show-error -o /tmp/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix https://hujii0711.github.io/savezone/ms-ceintl.vscode-language-pack-ko-1.105.2025091709.vsix || { echo "Failed to download vscode-language-pack-ko-1.105.2025091709.vsix"; exit 1; }
+  #    group:
+  #      kind: run
 events:
   postStart:
     - download-websquare-vsix
+    #- download-websquare-project
+    #- install-springboot-vsix
+    #- install-ko-langpack-vsix
