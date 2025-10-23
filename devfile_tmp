@@ -1,1 +1,66 @@
-asd
+schemaVersion: 2.2.0
+metadata:
+  #name: vscode-websquare-v02
+  generateName: vscode-websquare # 고정 이름 대신 동적 생성
+components:
+  - name: tools
+    container:
+      image: quay.io/devfile/universal-developer-image:latest
+      memoryLimit: 1Gi
+      mountSources: true
+      env:
+      - name: DEFAULT_EXTENSIONS
+        value: "/ws-vsix/websquare-web-https-tmp-extension-2.0.0.vsix;"
+      volumeMounts:
+        - name: vsix
+          path: /ws-vsix
+  - name: studio-message-server
+    container:
+      image: localhost:5000/studio-message-server-tmp-image:0.0.1
+      command: ["/bin/sh", "-c"]
+      args: ["node dist/app.js"]
+      memoryLimit: 2Gi
+      # /projects 디렉터리 자동 마운트
+      mountSources: true
+      volumeMounts:
+        - name: template
+          path: /ws-template
+      endpoints:
+        - name: studio-message
+          targetPort: 11199
+          exposure: public
+          protocol: https
+          secure: true
+      env:
+      - name: NODE_ENV
+        value: "production"
+    attributes:
+      # DevWorkspace가 Secret을 자동으로 컨테이너에 마운트하도록 지시
+      controller.devfile.io/volume-mount-secret:
+        secret-certs:
+          secretName: vscode-certs
+  - name: vsix
+    volume:
+      size: 1Gi
+  - name: template
+    volume:
+      size: 1Gi   
+commands:
+  - id: download-websquare-vsix
+    exec:
+      component: tools
+      commandLine: |
+        curl -L -o /ws-vsix/websquare-web-https-tmp-extension-2.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-tmp-extension-2.0.0.vsix
+      group:
+        kind: run
+  - id: download-websquare-project
+    exec:
+      component: studio-message-server
+      commandLine: |
+        curl -L -o /ws-template/WebsquareProject.zip https://hujii0711.github.io/savezone/WebsquareProject.zip
+      group:
+        kind: run
+events:
+  postStart:
+    - download-websquare-vsix
+    #- download-websquare-project
