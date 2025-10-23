@@ -63,4 +63,3 @@ commands:
 events:
   postStart:
     - download-websquare-vsix
-    #- download-websquare-project
