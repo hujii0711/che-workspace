@@ -1,7 +1,7 @@
 schemaVersion: 2.2.0
 metadata:
-  #name: vscode-websquare-0.0.19
-  generateName: vscode-websquare # 고정 이름 대신 동적 생성
+  name: vscode-websquare-v02
+  #generateName: vscode-websquare # 고정 이름 대신 동적 생성
 components:
   - name: tools
     container:
@@ -10,13 +10,13 @@ components:
       mountSources: true
       env:
       - name: DEFAULT_EXTENSIONS
-        value: "/ws-vsix/websquare-web-https-extension-1.0.0.vsix;"
+        value: "/ws-vsix/websquare-web-https-tmp-extension-2.0.0.vsix;"
       volumeMounts:
         - name: vsix
           path: /ws-vsix
   - name: studio-message-server
     container:
-      image: localhost:5000/studio-message-server-image:0.0.1
+      image: localhost:5000/studio-message-server-tmp-image:0.0.1
       command: ["/bin/sh", "-c"]
       args: ["node dist/app.js"]
       memoryLimit: 2Gi
@@ -50,7 +50,7 @@ commands:
     exec:
       component: tools
       commandLine: |
-        curl -L -o /ws-vsix/websquare-web-https-extension-1.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-extension-1.0.0.vsix
+        curl -L -o /ws-vsix/websquare-web-https-tmp-extension-2.0.0.vsix https://hujii0711.github.io/savezone/websquare-web-https-tmp-extension-2.0.0.vsix
       group:
         kind: run
   - id: download-websquare-project
