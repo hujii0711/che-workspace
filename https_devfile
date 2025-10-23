@@ -25,6 +25,8 @@ components:
       volumeMounts:
         - name: template
           path: /ws-template
+        - name: secret-certs
+          path: /ws-cert
       endpoints:
         - name: studio-message
           targetPort: 11199
@@ -39,9 +41,6 @@ components:
       controller.devfile.io/volume-mount-secret:
         secret-certs:
           secretName: vscode-certs
-      controller.devfile.io/ingress-annotations: |
-              nginx.ingress.kubernetes.io/backend-protocol: HTTPS
-              nginx.ingress.kubernetes.io/ssl-passthrough: true
   - name: vsix
     volume:
       size: 1Gi
